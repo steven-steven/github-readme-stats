@@ -4,45 +4,30 @@ const MockAdapter = require("axios-mock-adapter");
 const api = require("../api/index");
 const renderStatsCard = require("../src/cards/stats-card");
 const { renderError, CONSTANTS } = require("../src/common/utils");
-const calculateRank = require("../src/calculateRank");
 
 const stats = {
-  name: "Anurag Hazra",
-  totalStars: 100,
-  totalCommits: 200,
-  totalIssues: 300,
-  totalPRs: 400,
-  contributedTo: 500,
-  rank: null,
+  username: "juninight",
+  cg: 9100,
+  gamesWon: 1900,
+  bestGameWpm: 110,
+  wpm: 70,
+  recentAvgWpm: 85,
+  recentScores: [81, 82, 83, 84, 85, 86, 87, 88, 89, 90],
 };
-stats.rank = calculateRank({
-  totalCommits: stats.totalCommits,
-  totalRepos: 1,
-  followers: 0,
-  contributions: stats.contributedTo,
-  stargazers: stats.totalStars,
-  prs: stats.totalPRs,
-  issues: stats.totalIssues,
-});
 
 const data = {
-  data: {
-    user: {
-      name: stats.name,
-      repositoriesContributedTo: { totalCount: stats.contributedTo },
-      contributionsCollection: {
-        totalCommitContributions: stats.totalCommits,
-        restrictedContributionsCount: 100,
-      },
-      pullRequests: { totalCount: stats.totalPRs },
-      openIssues: { totalCount: stats.totalIssues },
-      closedIssues: { totalCount: 0 },
-      followers: { totalCount: 0 },
-      repositories: {
-        totalCount: 1,
-        nodes: [{ stargazers: { totalCount: 100 } }],
-      },
-    },
+  name: "Stevne",
+  lastName: "S",
+  country: "ca",
+  id: `tr:${stats.username}`,
+  avatar: null,
+  tstats: {
+    wpm: stats.wpm,
+    recentScores: stats.recentScores,
+    recentAvgWpm: stats.recentAvgWpm,
+    cg: stats.cg,
+    bestGameWpm: stats.bestGameWpm,
+    gamesWon: stats.gamesWon,
   },
 };
 
@@ -62,7 +47,7 @@ const mock = new MockAdapter(axios);
 const faker = (query, data) => {
   const req = {
     query: {
-      username: "anuraghazra",
+      username: "juninight",
       ...query,
     },
   };
@@ -70,7 +55,7 @@ const faker = (query, data) => {
     setHeader: jest.fn(),
     send: jest.fn(),
   };
-  mock.onPost("https://api.github.com/graphql").reply(200, data);
+  mock.onGet(`https://data.typeracer.com/users?id=tr:${req.query.username}`).reply(200, data);
 
   return { req, res };
 };
@@ -98,7 +83,7 @@ describe("Test /api/", () => {
     expect(res.send).toBeCalledWith(
       renderError(
         error.errors[0].message,
-        "Make sure the provided username is not an organization",
+        "Make sure the provided typeracer username is correct",
       ),
     );
   });
@@ -106,7 +91,7 @@ describe("Test /api/", () => {
   it("should get the query options", async () => {
     const { req, res } = faker(
       {
-        username: "anuraghazra",
+        username: "juninight",
         hide: "issues,prs,contribs",
         show_icons: true,
         hide_border: true,
@@ -138,88 +123,12 @@ describe("Test /api/", () => {
 
   it("should have proper cache", async () => {
     const { req, res } = faker({}, data);
-    mock.onPost("https://api.github.com/graphql").reply(200, data);
 
     await api(req, res);
 
     expect(res.setHeader.mock.calls).toEqual([
       ["Content-Type", "image/svg+xml"],
-      ["Cache-Control", `public, max-age=${CONSTANTS.FOUR_HOURS}`],
+      ["Cache-Control", `public, max-age=14400`],
     ]);
-  });
-
-  it("should set proper cache", async () => {
-    const { req, res } = faker({ cache_seconds: 15000 }, data);
-    await api(req, res);
-
-    expect(res.setHeader.mock.calls).toEqual([
-      ["Content-Type", "image/svg+xml"],
-      ["Cache-Control", `public, max-age=${15000}`],
-    ]);
-  });
-
-  it("should set proper cache with clamped values", async () => {
-    {
-      let { req, res } = faker({ cache_seconds: 200000 }, data);
-      await api(req, res);
-
-      expect(res.setHeader.mock.calls).toEqual([
-        ["Content-Type", "image/svg+xml"],
-        ["Cache-Control", `public, max-age=${CONSTANTS.ONE_DAY}`],
-      ]);
-    }
-
-    // note i'm using block scoped vars
-    {
-      let { req, res } = faker({ cache_seconds: 0 }, data);
-      await api(req, res);
-
-      expect(res.setHeader.mock.calls).toEqual([
-        ["Content-Type", "image/svg+xml"],
-        ["Cache-Control", `public, max-age=${CONSTANTS.FOUR_HOURS}`],
-      ]);
-    }
-
-    {
-      let { req, res } = faker({ cache_seconds: -10000 }, data);
-      await api(req, res);
-
-      expect(res.setHeader.mock.calls).toEqual([
-        ["Content-Type", "image/svg+xml"],
-        ["Cache-Control", `public, max-age=${CONSTANTS.FOUR_HOURS}`],
-      ]);
-    }
-  });
-
-  it("should add private contributions", async () => {
-    const { req, res } = faker(
-      {
-        username: "anuraghazra",
-        count_private: true,
-      },
-      data,
-    );
-
-    await api(req, res);
-
-    expect(res.setHeader).toBeCalledWith("Content-Type", "image/svg+xml");
-    expect(res.send).toBeCalledWith(
-      renderStatsCard(
-        {
-          ...stats,
-          totalCommits: stats.totalCommits + 100,
-          rank: calculateRank({
-            totalCommits: stats.totalCommits + 100,
-            totalRepos: 1,
-            followers: 0,
-            contributions: stats.contributedTo,
-            stargazers: stats.totalStars,
-            prs: stats.totalPRs,
-            issues: stats.totalIssues,
-          }),
-        },
-        {},
-      ),
-    );
   });
 });

@@ -1,9 +1,7 @@
 // @ts-check
-const I18n = require("../common/I18n");
 const Card = require("../common/Card");
 const icons = require("../common/icons");
 const { getStyles } = require("../getStyles");
-const { statCardLocales } = require("../translations");
 const {
   kFormatter,
   flexLayout,
@@ -19,9 +17,8 @@ const createTextNode = ({
   id,
   index,
   showIcons,
-  shiftValuePos,
 }) => {
-  const kValue = kFormatter(value);
+  const kValue = isNaN(value) ? value : kFormatter(value);
   const staggerDelay = (index + 3) * 150;
 
   const labelOffset = showIcons ? `x="25"` : "";
@@ -38,7 +35,7 @@ const createTextNode = ({
       <text class="stat bold" ${labelOffset} y="12.5">${label}:</text>
       <text 
         class="stat" 
-        x="${(showIcons ? 140 : 120) + shiftValuePos}" 
+        x="${(showIcons ? 140 : 120) + 35}" 
         y="12.5" 
         data-testid="${id}"
       >${kValue}</text>
@@ -53,13 +50,13 @@ const createTextNode = ({
  */
 const renderStatsCard = (stats = {}, options = { hide: [] }) => {
   const {
-    name,
-    totalStars,
-    totalCommits,
-    totalIssues,
-    totalPRs,
-    contributedTo,
-    rank,
+    username,
+    cg,
+    gamesWon,
+    bestGameWpm,
+    wpm,
+    recentAvgWpm = 0,
+    recentScores = [],
   } = stats;
   const {
     hide = [],
@@ -67,7 +64,6 @@ const renderStatsCard = (stats = {}, options = { hide: [] }) => {
     hide_title = false,
     hide_border = false,
     hide_rank = false,
-    include_all_commits = false,
     line_height = 25,
     title_color,
     icon_color,
@@ -77,7 +73,6 @@ const renderStatsCard = (stats = {}, options = { hide: [] }) => {
     custom_title,
     border_radius,
     border_color,
-    locale,
     disable_animations = false,
   } = options;
 
@@ -94,64 +89,45 @@ const renderStatsCard = (stats = {}, options = { hide: [] }) => {
       theme,
     });
 
-  const apostrophe = ["x", "s"].includes(name.slice(-1).toLocaleLowerCase())
-    ? ""
-    : "s";
-  const i18n = new I18n({
-    locale,
-    translations: statCardLocales({ name, apostrophe }),
-  });
-
   // Meta data for creating text nodes with createTextNode function
   const STATS = {
-    stars: {
+    cg: {
       icon: icons.star,
-      label: i18n.t("statcard.totalstars"),
-      value: totalStars,
-      id: "stars",
+      label: "Total Games Played",
+      value: cg,
+      id: "cg",
     },
-    commits: {
+    gamesWon: {
       icon: icons.commits,
-      label: `${i18n.t("statcard.commits")}${
-        include_all_commits ? "" : ` (${new Date().getFullYear()})`
-      }`,
-      value: totalCommits,
-      id: "commits",
+      label: "Total Games Won",
+      value: gamesWon,
+      id: "gamesWon",
     },
-    prs: {
+    bestGameWpm: {
       icon: icons.prs,
-      label: i18n.t("statcard.prs"),
-      value: totalPRs,
-      id: "prs",
+      label: "High score",
+      value: `${bestGameWpm} WPM`,
+      id: "bestGameWpm",
     },
-    issues: {
+    WPM: {
       icon: icons.issues,
-      label: i18n.t("statcard.issues"),
-      value: totalIssues,
-      id: "issues",
+      label: "Avg speed (all time)",
+      value: `${wpm} WPM`,
+      id: "wpm",
     },
-    contribs: {
+    recentAvgWpm: {
       icon: icons.contribs,
-      label: i18n.t("statcard.contribs"),
-      value: contributedTo,
-      id: "contribs",
+      label: "Avg speed (last 10 races)",
+      value: `${recentAvgWpm} WPM`,
+      id: "recentAvgWpm",
+    },
+    recentScores: {
+      icon: icons.contribs,
+      label: "Last 10 races",
+      value: `[${recentScores.toString()}]`,
+      id: "recentScores",
     },
   };
-
-  const longLocales = [
-    "cn",
-    "es",
-    "fr",
-    "pt-br",
-    "ru",
-    "uk-ua",
-    "id",
-    "my",
-    "pl",
-    "de",
-    "nl",
-  ];
-  const isLongLocale = longLocales.includes(locale) === true;
 
   // filter out hidden stats defined by user & create the text nodes
   const statItems = Object.keys(STATS)
@@ -162,8 +138,6 @@ const renderStatsCard = (stats = {}, options = { hide: [] }) => {
         ...STATS[key],
         index,
         showIcons: show_icons,
-        shiftValuePos:
-          (!include_all_commits ? 50 : 35) + (isLongLocale ? 50 : 0),
       }),
     );
 
@@ -189,14 +163,13 @@ const renderStatsCard = (stats = {}, options = { hide: [] }) => {
             dominant-baseline="central"
             text-anchor="middle"
           >
-            ${rank.level}
+            ${recentAvgWpm}
           </text>
         </g>
       </g>`;
 
-  // the better user's score the the rank will be closer to zero so
-  // subtracting 100 to get the progress in 100%
-  const progress = 100 - rank.score;
+  // progress over 100
+  const progress = (recentAvgWpm/150)*100;
   const cssStyles = getStyles({
     titleColor,
     textColor,
@@ -206,7 +179,7 @@ const renderStatsCard = (stats = {}, options = { hide: [] }) => {
   });
 
   const calculateTextWidth = () => {
-    return measureText(custom_title ? custom_title : i18n.t("statcard.title"));
+    return measureText(custom_title ? custom_title : `${username}'s Typeracer Stats`);
   };
 
   const width = hide_rank
@@ -219,7 +192,7 @@ const renderStatsCard = (stats = {}, options = { hide: [] }) => {
 
   const card = new Card({
     customTitle: custom_title,
-    defaultTitle: i18n.t("statcard.title"),
+    defaultTitle: `${username}'s Typeracer Stats`,
     width,
     height,
     border_radius,
@@ -242,17 +215,12 @@ const renderStatsCard = (stats = {}, options = { hide: [] }) => {
   const labels = Object.keys(STATS)
     .filter((key) => !hide.includes(key))
     .map((key) => {
-      if (key === "commits") {
-        return `${i18n.t("statcard.commits")} ${
-          include_all_commits ? "" : `in ${new Date().getFullYear()}`
-        } : ${totalStars}`;
-      }
       return `${STATS[key].label}: ${STATS[key].value}`;
     })
     .join(", ");
 
   card.setAccessibilityLabel({
-    title: `${card.title}, Rank: ${rank.level}`,
+    title: `${card.title}, WPM: ${recentAvgWpm}`,
     desc: labels,
   });
 

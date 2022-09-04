@@ -11,62 +11,50 @@ const themes = require("../themes");
 
 describe("Test renderStatsCard", () => {
   const stats = {
-    name: "Anurag Hazra",
-    totalStars: 100,
-    totalCommits: 200,
-    totalIssues: 300,
-    totalPRs: 400,
-    contributedTo: 500,
-    rank: { level: "A+", score: 40 },
+    username: "juninight",
+    cg: 9100,
+    gamesWon: 1900,
+    bestGameWpm: 110,
+    wpm: 70,
+    recentAvgWpm: 85,
+    recentScores: [81, 82, 83, 84, 85, 86, 87, 88, 89, 90],
   };
 
   it("should render correctly", () => {
     document.body.innerHTML = renderStatsCard(stats);
 
     expect(document.getElementsByClassName("header")[0].textContent).toBe(
-      "Anurag Hazra's GitHub Stats",
+      "juninight's Typeracer Stats",
     );
 
     expect(
       document.body.getElementsByTagName("svg")[0].getAttribute("height"),
-    ).toBe("195");
-    expect(getByTestId(document.body, "stars").textContent).toBe("100");
-    expect(getByTestId(document.body, "commits").textContent).toBe("200");
-    expect(getByTestId(document.body, "issues").textContent).toBe("300");
-    expect(getByTestId(document.body, "prs").textContent).toBe("400");
-    expect(getByTestId(document.body, "contribs").textContent).toBe("500");
+    ).toBe("220");
+    expect(getByTestId(document.body, "cg").textContent).toBe("9.1k");
+    expect(getByTestId(document.body, "gamesWon").textContent).toBe("1.9k");
+    expect(getByTestId(document.body, "bestGameWpm").textContent).toBe("110 WPM");
+    expect(getByTestId(document.body, "wpm").textContent).toBe("70 WPM");
+    expect(getByTestId(document.body, "recentAvgWpm").textContent).toBe("85 WPM");
+    expect(getByTestId(document.body, "recentScores").textContent).toBe(`[${stats.recentScores.toString()}]`);
     expect(queryByTestId(document.body, "card-bg")).toBeInTheDocument();
     expect(queryByTestId(document.body, "rank-circle")).toBeInTheDocument();
   });
 
-  it("should have proper name apostrophe", () => {
-    document.body.innerHTML = renderStatsCard({ ...stats, name: "Anil Das" });
-
-    expect(document.getElementsByClassName("header")[0].textContent).toBe(
-      "Anil Das' GitHub Stats",
-    );
-
-    document.body.innerHTML = renderStatsCard({ ...stats, name: "Felix" });
-
-    expect(document.getElementsByClassName("header")[0].textContent).toBe(
-      "Felix' GitHub Stats",
-    );
-  });
-
   it("should hide individual stats", () => {
     document.body.innerHTML = renderStatsCard(stats, {
-      hide: ["issues", "prs", "contribs"],
+      hide: ["recentScores", "recentAvgWpm", "cg"],
     });
 
     expect(
       document.body.getElementsByTagName("svg")[0].getAttribute("height"),
     ).toBe("150"); // height should be 150 because we clamped it.
 
-    expect(queryByTestId(document.body, "stars")).toBeDefined();
-    expect(queryByTestId(document.body, "commits")).toBeDefined();
-    expect(queryByTestId(document.body, "issues")).toBeNull();
-    expect(queryByTestId(document.body, "prs")).toBeNull();
-    expect(queryByTestId(document.body, "contribs")).toBeNull();
+    expect(queryByTestId(document.body, "wpm")).toBeDefined();
+    expect(queryByTestId(document.body, "bestGameWpm")).toBeDefined();
+    expect(queryByTestId(document.body, "gamesWon")).toBeDefined();
+    expect(queryByTestId(document.body, "cg")).toBeNull();
+    expect(queryByTestId(document.body, "recentAvgWpm")).toBeNull();
+    expect(queryByTestId(document.body, "recentScores")).toBeNull();
   });
 
   it("should hide_rank", () => {
@@ -198,9 +186,9 @@ describe("Test renderStatsCard", () => {
     });
 
     expect(queryAllByTestId(document.body, "icon")[0]).toBeDefined();
-    expect(queryByTestId(document.body, "stars")).toBeDefined();
+    expect(queryByTestId(document.body, "cg")).toBeDefined();
     expect(
-      queryByTestId(document.body, "stars").previousElementSibling, // the label
+      queryByTestId(document.body, "cg").previousElementSibling, // the label
     ).toHaveAttribute("x", "25");
   });
 
@@ -208,9 +196,9 @@ describe("Test renderStatsCard", () => {
     document.body.innerHTML = renderStatsCard(stats, { show_icons: false });
 
     expect(queryAllByTestId(document.body, "icon")[0]).not.toBeDefined();
-    expect(queryByTestId(document.body, "stars")).toBeDefined();
+    expect(queryByTestId(document.body, "cg")).toBeDefined();
     expect(
-      queryByTestId(document.body, "stars").previousElementSibling, // the label
+      queryByTestId(document.body, "cg").previousElementSibling, // the label
     ).not.toHaveAttribute("x");
   });
 
@@ -221,7 +209,7 @@ describe("Test renderStatsCard", () => {
 
     expect(
       document.body.getElementsByTagName("svg")[0].getAttribute("width"),
-    ).toBe("305.81250000000006");
+    ).toBe("285.03125");
   });
 
   it("should auto resize if hide_rank is true & custom_title is set", () => {
@@ -233,38 +221,6 @@ describe("Test renderStatsCard", () => {
     expect(
       document.body.getElementsByTagName("svg")[0].getAttribute("width"),
     ).toBe("270");
-  });
-
-  it("should render translations", () => {
-    document.body.innerHTML = renderStatsCard(stats, { locale: "cn" });
-    expect(document.getElementsByClassName("header")[0].textContent).toBe(
-      "Anurag Hazra 的 GitHub 统计数据",
-    );
-    expect(
-      document.querySelector(
-        'g[transform="translate(0, 0)"]>.stagger>.stat.bold',
-      ).textContent,
-    ).toMatchInlineSnapshot(`"获标星数（star）:"`);
-    expect(
-      document.querySelector(
-        'g[transform="translate(0, 25)"]>.stagger>.stat.bold',
-      ).textContent,
-    ).toMatchInlineSnapshot(`"累计提交数（commit） (2022):"`);
-    expect(
-      document.querySelector(
-        'g[transform="translate(0, 50)"]>.stagger>.stat.bold',
-      ).textContent,
-    ).toMatchInlineSnapshot(`"拉取请求数（PR）:"`);
-    expect(
-      document.querySelector(
-        'g[transform="translate(0, 75)"]>.stagger>.stat.bold',
-      ).textContent,
-    ).toMatchInlineSnapshot(`"指出问题数（issue）:"`);
-    expect(
-      document.querySelector(
-        'g[transform="translate(0, 100)"]>.stagger>.stat.bold',
-      ).textContent,
-    ).toMatchInlineSnapshot(`"参与项目数:"`);
   });
 
   it("should render without rounding", () => {

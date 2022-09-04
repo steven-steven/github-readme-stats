@@ -16,13 +16,13 @@ export type RepositoryData = {
 };
 
 export type StatsData = {
-  name: string;
-  totalPRs: number;
-  totalCommits: number;
-  totalIssues: number;
-  totalStars: number;
-  contributedTo: number;
-  rank: { level: string; score: number };
+  username: string,
+  cg: number,
+  gamesWon: number,
+  bestGameWpm: number,
+  wpm: number,
+  recentAvgWpm: number,
+  recentScores: number[],
 };
 
 export type Lang = {

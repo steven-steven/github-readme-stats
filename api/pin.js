@@ -7,7 +7,6 @@ const {
 } = require("../src/common/utils");
 const fetchRepo = require("../src/fetchers/repo-fetcher");
 const renderRepoCard = require("../src/cards/repo-card");
-const blacklist = require("../src/common/blacklist");
 const { isLocaleAvailable } = require("../src/translations");
 
 module.exports = async (req, res) => {
@@ -28,10 +27,6 @@ module.exports = async (req, res) => {
   } = req.query;
 
   res.setHeader("Content-Type", "image/svg+xml");
-
-  if (blacklist.includes(username)) {
-    return res.send(renderError("Something went wrong"));
-  }
 
   if (locale && !isLocaleAvailable(locale)) {
     return res.send(renderError("Something went wrong", "Language not found"));
