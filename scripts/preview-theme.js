@@ -87,8 +87,6 @@ async function run() {
     const ccc = new ColorContrastChecker();
     const warnings = [];
     const token = core.getInput("token");
-    console.log("token?");
-    console.log(token);
     const octokit = github.getOctokit(token || process.env.PERSONAL_TOKEN);
     const pullRequestId = getPrNumber();
 
@@ -108,18 +106,11 @@ async function run() {
     const comment = await findComment(octokit, pullRequestId);
 
     const diff = parse(res.data);
-    const content1 = diff.find((file) => file.to === "themes/index.js")
-      .chunks[0].changes;
-
-    const content = content1
-      .filter((c) => c.type === "add")
+    const content = diff
+      .find((file) => file.to === "themes/index.js")
+      .chunks[0].changes.filter((c) => c.type === "add")
       .map((c) => c.content.replace("+", ""))
       .join("");
-
-    console.log("content1 diff");
-    console.log(content1);
-    console.log("content");
-    console.log(content);
 
     const themeObject = Hjson.parse(content);
     const themeName = Object.keys(themeObject)[0];
