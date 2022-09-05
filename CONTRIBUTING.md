@@ -1,4 +1,4 @@
-# Contributing to [github-readme-stats](https://github.com/anuraghazra/github-readme-stats)
+# Contributing to [typeracer-readme-stats](https://github.com/steven-steven/typeracer-readme-stats)
 
 We love your input! We want to make contributing to this project as easy and transparent as possible, whether it's:
 
@@ -53,35 +53,9 @@ While creating the Pull request to add a new theme **don't forget to add a scree
 
 In short, when you submit changes, your submissions are understood to be under the same [MIT License](http://choosealicense.com/licenses/mit/) that covers the project. Feel free to contact the maintainers if that's a concern.
 
-## Report issues/bugs using GitHub's [issues](https://github.com/anuraghazra/github-readme-stats/issues)
+## Report issues/bugs using GitHub's [issues](https://github.com/steven-steven/github-readme-stats/issues)
 
-We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/anuraghazra/github-readme-stats/issues/new/choose); it's that easy!
-
-## Frequently Asked Questions (FAQs)
-
-**Q:** How to hide Jupyter Notebook?
-
-> **Ans:** &hide=jupyter%20notebook
-
-**Q:** I could not figure out how to deploy on my own Vercel instance
-
-> **Ans:**
->
-> -   docs: <https://github.com/anuraghazra/github-readme-stats/#deploy-on-your-own-vercel-instance>
-> -   YT tutorial by codeSTACKr: <https://www.youtube.com/watch?v=n6d4KHSKqGk&feature=youtu.be&t=107>
-
-**Q:** Language Card is incorrect
-
-> **Ans:** Please read all the related issues/comments before opening any issues regarding language card stats:
->
-> -   <https://github.com/anuraghazra/github-readme-stats/issues/136#issuecomment-665164174>
->
-> -   <https://github.com/anuraghazra/github-readme-stats/issues/136#issuecomment-665172181>
-
-**Q:** How to count private stats?
-
-> **Ans:** We can only count public commits & we cannot access any other private info of any users, so it's not possible. The only way to count your personal private stats is to deploy on your own instance & use your own PAT (Personal Access Token)
-
+We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/steven-steven/github-readme-stats/issues/new/choose); it's that easy!
 ### Bug Reports
 
 **Great Bug Reports** tend to have:

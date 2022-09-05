@@ -35,7 +35,7 @@ const createTextNode = ({
       <text class="stat bold" ${labelOffset} y="12.5">${label}:</text>
       <text 
         class="stat" 
-        x="${(showIcons ? 140 : 120) + 35}" 
+        x="${(showIcons ? 140 : 120) + 85}" 
         y="12.5" 
         data-testid="${id}"
       >${kValue}</text>
@@ -152,9 +152,9 @@ const renderStatsCard = (stats = {}, options = { hide: [] }) => {
   const rankCircle = hide_rank
     ? ""
     : `<g data-testid="rank-circle" 
-          transform="translate(400, ${height / 2 - 50})">
-        <circle class="rank-circle-rim" cx="-10" cy="8" r="40" />
-        <circle class="rank-circle" cx="-10" cy="8" r="40" />
+          transform="translate(400, ${height / 2 - 80})">
+        <circle class="rank-circle-rim" cx="-10" cy="8" r="60" />
+        <circle class="rank-circle" cx="-10" cy="8" r="60" />
         <g class="rank-text">
           <text
             x="-5"
@@ -163,7 +163,7 @@ const renderStatsCard = (stats = {}, options = { hide: [] }) => {
             dominant-baseline="central"
             text-anchor="middle"
           >
-            ${recentAvgWpm}
+            ${recentAvgWpm} WPM
           </text>
         </g>
       </g>`;

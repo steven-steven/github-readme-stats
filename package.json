@@ -5,12 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --coverage",
-    "test:watch": "jest --watch",
-    "theme-readme-gen": "node scripts/generate-theme-doc",
-    "preview-theme": "node scripts/preview-theme",
-    "generate-langs-json": "node scripts/generate-langs-json"
+    "test:watch": "jest --watch"
   },
-  "author": "Anurag Hazra",
+  "author": "Steven",
   "license": "MIT",
   "engines": {
     "node": ">=13"

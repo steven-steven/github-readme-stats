@@ -3,7 +3,7 @@
  * @param {number} value
  */
 const calculateCircleProgress = (value) => {
-  const radius = 40;
+  const radius = 60;
   const c = Math.PI * (radius * 2);
 
   if (value < 0) value = 0;
@@ -99,7 +99,7 @@ const getStyles = ({
     }
     .rank-circle {
       stroke: ${titleColor};
-      stroke-dasharray: 250;
+      stroke-dasharray: 370 370;
       fill: none;
       stroke-width: 6;
       stroke-linecap: round;
