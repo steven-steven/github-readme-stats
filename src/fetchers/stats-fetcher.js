@@ -1,11 +1,7 @@
 // @ts-check
 const axios = require("axios").default;
 
-const {
-  logger,
-  CustomError,
-  MissingParamError,
-} = require("../common/utils");
+const { logger, CustomError, MissingParamError } = require("../common/utils");
 
 require("dotenv").config();
 
@@ -14,15 +10,15 @@ require("dotenv").config();
  */
 const fetcher = (username) => {
   return axios({
-    method: 'get',
-    url: `https://data.typeracer.com/users?id=tr:${username}`
+    method: "get",
+    url: `https://data.typeracer.com/users?id=tr:${username}`,
   }).catch((error) => {
     logger.error(`Fail to fetch TypeRacer statistics: ${error}`);
     throw new CustomError(
       error.message || "Could not fetch typeracer statistic",
       CustomError.USER_NOT_FOUND,
     );
-  })
+  });
 };
 
 /**
@@ -43,11 +39,11 @@ async function fetchStats(username) {
   };
 
   let raceResponse = await fetcher(username);
-  
+
   // @ts-ignore
   const { data } = raceResponse;
 
-  if(!data || !data.tstats || data.errors){ 
+  if (!data || !data.tstats || data.errors) {
     logger.error(data.errors);
     throw new CustomError(
       data.errors[0].message || "Could not fetch user",

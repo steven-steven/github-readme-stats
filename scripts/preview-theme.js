@@ -108,11 +108,12 @@ async function run() {
     const comment = await findComment(octokit, pullRequestId);
 
     const diff = parse(res.data);
-    const content1 = diff
-      .find((file) => file.to === "themes/index.js")
+    const content1 = diff.find((file) => file.to === "themes/index.js")
       .chunks[0].changes;
-    
-    const content = content1.filter((c) => c.type === "add").map((c) => c.content.replace("+", ""))
+
+    const content = content1
+      .filter((c) => c.type === "add")
+      .map((c) => c.content.replace("+", ""))
       .join("");
 
     console.log("content1 diff");

@@ -38,8 +38,9 @@ afterEach(() => {
 
 describe("Test fetchStats", () => {
   it("should fetch correct stats", async () => {
-    mock.onGet(`https://data.typeracer.com/users?id=tr:juninight`).reply(200, data);
-
+    mock
+      .onGet(`https://data.typeracer.com/users?id=tr:juninight`)
+      .reply(200, data);
 
     let stats = await fetchStats("juninight");
 
