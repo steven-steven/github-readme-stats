@@ -29,7 +29,7 @@ describe("Test renderStatsCard", () => {
 
     expect(
       document.body.getElementsByTagName("svg")[0].getAttribute("height"),
-    ).toBe("220");
+    ).toBe("255");
     expect(getByTestId(document.body, "cg").textContent).toBe("9.1k");
     expect(getByTestId(document.body, "gamesWon").textContent).toBe("1.9k");
     expect(getByTestId(document.body, "bestGameWpm").textContent).toBe("110 WPM");
@@ -47,7 +47,7 @@ describe("Test renderStatsCard", () => {
 
     expect(
       document.body.getElementsByTagName("svg")[0].getAttribute("height"),
-    ).toBe("150"); // height should be 150 because we clamped it.
+    ).toBe("170"); // height should be 150 because we clamped it.
 
     expect(queryByTestId(document.body, "wpm")).toBeDefined();
     expect(queryByTestId(document.body, "bestGameWpm")).toBeDefined();

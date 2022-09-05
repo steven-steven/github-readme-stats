@@ -24,7 +24,7 @@ const createTextNode = ({
   const labelOffset = showIcons ? `x="25"` : "";
   const iconSvg = showIcons
     ? `
-    <svg data-testid="icon" class="icon" viewBox="0 0 16 16" version="1.1" width="16" height="16">
+    <svg data-testid="icon" class="icon" y="2" viewBox="0 0 16 16" version="1.1" width="16" height="16">
       ${icon}
     </svg>
   `
@@ -32,11 +32,11 @@ const createTextNode = ({
   return `
     <g class="stagger" style="animation-delay: ${staggerDelay}ms" transform="translate(25, 0)">
       ${iconSvg}
-      <text class="stat bold" ${labelOffset} y="12.5">${label}:</text>
+      <text class="stat bold" ${labelOffset} y="15">${label}:</text>
       <text 
         class="stat" 
-        x="${(showIcons ? 140 : 120) + 85}" 
-        y="12.5" 
+        x="${(showIcons ? 140 : 120) + 70}" 
+        y="15" 
         data-testid="${id}"
       >${kValue}</text>
     </g>
@@ -64,7 +64,7 @@ const renderStatsCard = (stats = {}, options = { hide: [] }) => {
     hide_title = false,
     hide_border = false,
     hide_rank = false,
-    line_height = 25,
+    line_height = 30,
     title_color,
     icon_color,
     text_color,
@@ -92,37 +92,37 @@ const renderStatsCard = (stats = {}, options = { hide: [] }) => {
   // Meta data for creating text nodes with createTextNode function
   const STATS = {
     cg: {
-      icon: icons.star,
+      icon: icons.book,
       label: "Total Games Played",
       value: cg,
       id: "cg",
     },
     gamesWon: {
-      icon: icons.commits,
+      icon: icons.book,
       label: "Total Games Won",
       value: gamesWon,
       id: "gamesWon",
     },
     bestGameWpm: {
-      icon: icons.prs,
+      icon: icons.star,
       label: "High score",
       value: `${bestGameWpm} WPM`,
       id: "bestGameWpm",
     },
-    WPM: {
-      icon: icons.issues,
+    wpm: {
+      icon: icons.star,
       label: "Avg speed (all time)",
       value: `${wpm} WPM`,
       id: "wpm",
     },
     recentAvgWpm: {
-      icon: icons.contribs,
+      icon: icons.star,
       label: "Avg speed (last 10 races)",
       value: `${recentAvgWpm} WPM`,
       id: "recentAvgWpm",
     },
     recentScores: {
-      icon: icons.contribs,
+      icon: icons.book,
       label: "Last 10 races",
       value: `[${recentScores.toString()}]`,
       id: "recentScores",
@@ -145,7 +145,7 @@ const renderStatsCard = (stats = {}, options = { hide: [] }) => {
   // but if rank circle is visible clamp the minimum height to `150`
   let height = Math.max(
     45 + (statItems.length + 1) * lheight,
-    hide_rank ? 0 : 150,
+    hide_rank ? 0 : 170,
   );
 
   // Conditionally rendered elements

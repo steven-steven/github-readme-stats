@@ -57,7 +57,7 @@ describe("Card", () => {
   });
 
   it("title should have prefix icon", () => {
-    const card = new Card({ title: "ok", titlePrefixIcon: icons.contribs });
+    const card = new Card({ title: "ok", titlePrefixIcon: icons.book });
 
     document.body.innerHTML = card.render(``);
     expect(document.getElementsByClassName("icon")[0]).toBeInTheDocument();
