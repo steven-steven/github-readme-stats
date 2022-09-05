@@ -55,7 +55,9 @@ const faker = (query, data) => {
     setHeader: jest.fn(),
     send: jest.fn(),
   };
-  mock.onGet(`https://data.typeracer.com/users?id=tr:${req.query.username}`).reply(200, data);
+  mock
+    .onGet(`https://data.typeracer.com/users?id=tr:${req.query.username}`)
+    .reply(200, data);
 
   return { req, res };
 };

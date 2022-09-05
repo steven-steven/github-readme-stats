@@ -32,10 +32,16 @@ describe("Test renderStatsCard", () => {
     ).toBe("255");
     expect(getByTestId(document.body, "cg").textContent).toBe("9.1k");
     expect(getByTestId(document.body, "gamesWon").textContent).toBe("1.9k");
-    expect(getByTestId(document.body, "bestGameWpm").textContent).toBe("110 WPM");
+    expect(getByTestId(document.body, "bestGameWpm").textContent).toBe(
+      "110 WPM",
+    );
     expect(getByTestId(document.body, "wpm").textContent).toBe("70 WPM");
-    expect(getByTestId(document.body, "recentAvgWpm").textContent).toBe("85 WPM");
-    expect(getByTestId(document.body, "recentScores").textContent).toBe(`[${stats.recentScores.toString()}]`);
+    expect(getByTestId(document.body, "recentAvgWpm").textContent).toBe(
+      "85 WPM",
+    );
+    expect(getByTestId(document.body, "recentScores").textContent).toBe(
+      `[${stats.recentScores.toString()}]`,
+    );
     expect(queryByTestId(document.body, "card-bg")).toBeInTheDocument();
     expect(queryByTestId(document.body, "rank-circle")).toBeInTheDocument();
   });

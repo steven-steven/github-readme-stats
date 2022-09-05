@@ -10,14 +10,7 @@ const {
   getCardColors,
 } = require("../common/utils");
 
-const createTextNode = ({
-  icon,
-  label,
-  value,
-  id,
-  index,
-  showIcons,
-}) => {
+const createTextNode = ({ icon, label, value, id, index, showIcons }) => {
   const kValue = isNaN(value) ? value : kFormatter(value);
   const staggerDelay = (index + 3) * 150;
 
@@ -169,7 +162,7 @@ const renderStatsCard = (stats = {}, options = { hide: [] }) => {
       </g>`;
 
   // progress over 100
-  const progress = (recentAvgWpm/150)*100;
+  const progress = (recentAvgWpm / 150) * 100;
   const cssStyles = getStyles({
     titleColor,
     textColor,
@@ -179,7 +172,9 @@ const renderStatsCard = (stats = {}, options = { hide: [] }) => {
   });
 
   const calculateTextWidth = () => {
-    return measureText(custom_title ? custom_title : `${username}'s Typeracer Stats`);
+    return measureText(
+      custom_title ? custom_title : `${username}'s Typeracer Stats`,
+    );
   };
 
   const width = hide_rank

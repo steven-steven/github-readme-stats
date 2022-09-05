@@ -6,7 +6,9 @@
   "scripts": {
     "test": "jest --coverage",
     "test:watch": "jest --watch",
-    "preview-theme": "node scripts/preview-theme"
+    "preview-theme": "node scripts/preview-theme",
+    "prettier:check:ci": "./node_modules/.bin/prettier --check .",
+    "prettier:format": "./node_modules/.bin/prettier --write ."
   },
   "author": "Steven",
   "license": "MIT",
