@@ -1,5 +1,5 @@
 {
-  "name": "github-readme-stats",
+  "name": "typeracer-readme-stats",
   "version": "1.0.0",
   "description": "Dynamically generate stats for your github readmes",
   "main": "index.js",

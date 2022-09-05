@@ -27,17 +27,14 @@ Interested in diving deeper into understanding how github-readme-stats works?
 
 ## Local Development
 
-To run & test github-readme-stats, you need to follow a few simple steps:-
+To run & test typeracer-readme-stats, you need to follow a few simple steps:-
 _(make sure you already have a [Vercel](https://vercel.com/) account)_
 
 1.  Install [Vercel CLI](https://vercel.com/download).
 2.  Fork the repository and clone the code to your local machine.
 3.  Run `npm install` in the repository root.
 4.  Run the command "vercel" in the root and follow the steps there.
-5.  Open `vercel.json` and set the maxDuration to 10.
-6.  Create a `.env` file in the root of the directory.
-7.  In the .env file add a new variable named "PAT_1" with your [GitHub Personal Access Token](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token).
-8.  Run the command "vercel dev" to start a development server at <https://localhost:3000>.
+6.  Run the command "vercel dev" to start a development server at <https://localhost:3000>.
 
 ## Themes Contribution
 
@@ -53,9 +50,9 @@ While creating the Pull request to add a new theme **don't forget to add a scree
 
 In short, when you submit changes, your submissions are understood to be under the same [MIT License](http://choosealicense.com/licenses/mit/) that covers the project. Feel free to contact the maintainers if that's a concern.
 
-## Report issues/bugs using GitHub's [issues](https://github.com/steven-steven/github-readme-stats/issues)
+## Report issues/bugs using GitHub's [issues](https://github.com/steven-steven/typeracer-readme-stats/issues)
 
-We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/steven-steven/github-readme-stats/issues/new/choose); it's that easy!
+We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/steven-steven/typeracer-readme-stats/issues/new/choose); it's that easy!
 ### Bug Reports
 
 **Great Bug Reports** tend to have:

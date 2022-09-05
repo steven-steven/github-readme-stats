@@ -6,17 +6,17 @@ Note: This is a fork implementation of [github-readme-stats](https://github.com/
  <p>
 </p>
   <p align="center">
-    <a href="https://github.com/steven-steven/github-readme-stats/actions">
-      <img alt="Tests Passing" src="https://github.com/steven-steven/github-readme-stats/workflows/Test/badge.svg" />
+    <a href="https://github.com/steven-steven/typeracer-readme-stats/actions">
+      <img alt="Tests Passing" src="https://github.com/steven-steven/typeracer-readme-stats/workflows/Test/badge.svg" />
     </a>
-    <a href="https://codecov.io/gh/steven-steven/github-readme-stats">
-      <img src="https://codecov.io/gh/steven-steven/github-readme-stats/branch/master/graph/badge.svg" />
+    <a href="https://codecov.io/gh/steven-steven/typeracer-readme-stats">
+      <img src="https://codecov.io/gh/steven-steven/typeracer-readme-stats/branch/master/graph/badge.svg" />
     </a>
-    <a href="https://github.com/steven-steven/github-readme-stats/issues">
-      <img alt="Issues" src="https://img.shields.io/github/issues/steven-steven/github-readme-stats?color=0088ff" />
+    <a href="https://github.com/steven-steven/typeracer-readme-stats/issues">
+      <img alt="Issues" src="https://img.shields.io/github/issues/steven-steven/typeracer-readme-stats?color=0088ff" />
     </a>
-    <a href="https://github.com/steven-steven/github-readme-stats/pulls">
-      <img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/steven-steven/github-readme-stats?color=0088ff" />
+    <a href="https://github.com/steven-steven/typeracer-readme-stats/pulls">
+      <img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/steven-steven/typeracer-readme-stats?color=0088ff" />
     </a>
     <br />
   </p>
@@ -24,11 +24,11 @@ Note: This is a fork implementation of [github-readme-stats](https://github.com/
   <p align="center">
     <a href="#demo">View Demo</a>
     ·
-    <a href="https://github.com/steven-steven/github-readme-stats/issues/new/choose">Report Bug</a>
+    <a href="https://github.com/steven-steven/typeracer-readme-stats/issues/new/choose">Report Bug</a>
     ·
-    <a href="https://github.com/steven-steven/github-readme-stats/issues/new/choose">Request Feature</a>
+    <a href="https://github.com/steven-steven/typeracer-readme-stats/issues/new/choose">Request Feature</a>
     ·
-    <a href="https://github.com/steven-steven/github-readme-stats/discussions">Ask Question</a>
+    <a href="https://github.com/steven-steven/typeracer-readme-stats/discussions">Ask Question</a>
   </p>
 </p>
 
@@ -47,7 +47,7 @@ Copy-paste this into your markdown content, and that's it. Simple!
 Change the `?username=` value to your Typeracer username.
 
 ```md
-[![Steven's Typeracer stats](https://typeracer-readme-stats.vercel.app/api?username=juninight29)](https://github.com/steven-steven/github-readme-stats)
+[![Steven's Typeracer stats](https://typeracer-readme-stats.vercel.app/api?username=juninight29)](https://github.com/steven-steven/typeracer-readme-stats)
 ```
 
 ### Hiding individual stats
